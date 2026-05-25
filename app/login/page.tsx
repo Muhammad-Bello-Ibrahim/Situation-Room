@@ -1,0 +1,5 @@
+"use client";
+import { useState } from "react"; import { useRouter } from "next/navigation";
+export default function Login(){ const [email,setEmail]=useState("admin@example.com"); const [password,setPassword]=useState("password123"); const r=useRouter();
+const submit=async()=>{ const res=await fetch('/api/auth/login',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({email,password})}); const d=await res.json(); if(d.token){ localStorage.setItem('token',d.token); localStorage.setItem('user',JSON.stringify(d.user)); r.push('/dashboard'); } };
+return <div className="min-h-screen grid place-items-center"><div className="card w-full max-w-md"><h2 className="text-xl font-semibold mb-4">Login</h2><input className="w-full mb-2 p-2 bg-slate-800 rounded" value={email} onChange={e=>setEmail(e.target.value)}/><input type="password" className="w-full mb-2 p-2 bg-slate-800 rounded" value={password} onChange={e=>setPassword(e.target.value)}/><button onClick={submit} className="w-full bg-blue-600 rounded p-2">Sign in</button></div></div>; }

@@ -1,0 +1,5 @@
+import { z } from "zod";
+export const registerSchema = z.object({name:z.string().min(2),email:z.string().email(),password:z.string().min(8),role:z.enum(["SUPER_ADMIN","LGA_COORDINATOR","WARD_SUPERVISOR","POLLING_UNIT_AGENT","OBSERVER"]),lga:z.string().optional(),ward:z.string().optional(),pollingUnit:z.string().optional()});
+export const loginSchema = z.object({email:z.string().email(),password:z.string().min(8)});
+export const reportSchema = z.object({pollingUnitId:z.string(),ward:z.string(),lga:z.string(),turnout:z.number().min(0),accreditationStatus:z.enum(["PENDING","ONGOING","COMPLETED"]),issues:z.array(z.string()).default([]),media:z.array(z.string()).default([])});
+export const incidentSchema = z.object({title:z.string().min(3),description:z.string().min(5),severity:z.enum(["LOW","MEDIUM","HIGH","CRITICAL"]),location:z.object({lga:z.string(),ward:z.string().optional(),pollingUnit:z.string().optional()}),status:z.enum(["OPEN","RESOLVED"]).default("OPEN"),media:z.array(z.string()).default([])});

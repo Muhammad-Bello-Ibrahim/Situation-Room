@@ -1,0 +1,2 @@
+import { NextRequest, NextResponse } from "next/server"; import { connectDB } from "@/lib/db"; import PollingUnit from "@/models/PollingUnit"; import { readAuth } from "@/lib/auth";
+export async function GET(req:NextRequest){ const auth=readAuth(req); if(!auth) return NextResponse.json({error:"Unauthorized"},{status:401}); await connectDB(); return NextResponse.json(await PollingUnit.find({}).limit(500)); }
