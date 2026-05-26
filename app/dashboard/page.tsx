@@ -22,7 +22,9 @@ export default function Dashboard() {
       setAlerts((current) => ["New polling report received", ...current].slice(0, 5));
     });
 
-    return () => socket.disconnect();
+    return () => {
+      socket.disconnect();
+    };
   }, []);
 
   return (
